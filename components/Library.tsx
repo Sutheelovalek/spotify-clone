@@ -2,11 +2,22 @@
 
 import { TbPlaylist } from 'react-icons/tb';
 import { AiOutlinePlus } from 'react-icons/ai';
+import useAuthModel from '@/hooks/useAuthModal';
+import { useUser } from '@/hooks/useUser';
+import useUploadModal from '@/hooks/useUploadModal';
 
 
 const Library = () => {
+    const authModal = useAuthModel();
+    const uploadModal = useUploadModal();
+    const { user } = useUser();
     const onClick = () => {
-        // Handle upload later
+        if(!user) {
+            return authModal.onOpen();
+        }
+
+        //to do check for subscriptions
+        return uploadModal.onOpen();
     }
     return (
         <div className="flex flex-col">
@@ -30,21 +41,19 @@ const Library = () => {
                 className='
                 text-neutral-400
                 font-medium
-                text-md
-                '
+                text-md'
                 >
                     Your Library
                 </p>
                 </div>
             <AiOutlinePlus 
-            onClick={onClick}
-            size={20}
-            className='
-                text-neutral-400
-                cursor-pointer
-                hover:text-white
-                transition
-
+                    onClick={onClick}
+                    size={20}
+                    className='
+                    text-neutral-400
+                      cursor-pointer
+                    hover:text-white
+                      transition
             '
             />
             </div>
